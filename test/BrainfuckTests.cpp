@@ -17,8 +17,20 @@ TEST_CASE( "Brainfuck interpreter test cases", "[interp]" ) {
         // debugPrinter(interpreter.interpret(code, input));
         REQUIRE( interpreter.interpret(code, input) == convertToString("todo") );
     }
+  
+ #if 0
+    SECTION( "overflow test" ) {
+        Code code{convertToString(",+.")};
+        Input input{convertToString("\377")};
+        REQUIRE( interpreter.interpret(code, input) == convertToString("\0") );
+    }
 
-#if 0
+    SECTION( "underflow test" ) {
+        Code code{convertToString(",-.")};
+        Input input{convertToString("\0")};
+        REQUIRE( interpreter.interpret(code, input) == convertToString("\377") );
+    }
+
     SECTION( "outputting memory without any prior operations yields zeroes" ) {
         Code code{convertToString("..........")};
         Input input{convertToString("")};
@@ -53,18 +65,6 @@ TEST_CASE( "Brainfuck interpreter test cases", "[interp]" ) {
         Code code{convertToString(",[.>+[.-]<-]")};
         Input input{convertToString("\5")};
         REQUIRE( interpreter.interpret(code, input) == convertToString("todo") );
-    }
-
-    SECTION( "overflow test" ) {
-        Code code{convertToString(",+.")};
-        Input input{convertToString("\377")};
-        REQUIRE( interpreter.interpret(code, input) == convertToString("\0") );
-    }
-
-    SECTION( "underflow test" ) {
-        Code code{convertToString(",-.")};
-        Input input{convertToString("\0")};
-        REQUIRE( interpreter.interpret(code, input) == convertToString("\377") );
     }
 
     SECTION( "comments are ignored" ) {
