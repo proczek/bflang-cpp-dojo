@@ -2,6 +2,7 @@
 #include <string>
 #include <catch.hpp>
 #include <stringConverter.hpp>
+#include <debugPrinter.hpp>
 
 #include "Brainfuck.hpp"
 
@@ -12,6 +13,8 @@ TEST_CASE( "Brainfuck interpreter test cases", "[interp]" ) {
     SECTION( "empty code evaluates to empty result" ) {
         Code code{convertToString("")};
         Input input{convertToString("")};
+        // In case you need to print what interpreter returns use debugPrinter function
+        // debugPrinter(interpreter.interpret(code, input));
         REQUIRE( interpreter.interpret(code, input) == convertToString("todo") );
     }
 
